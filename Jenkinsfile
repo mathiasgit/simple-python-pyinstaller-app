@@ -11,6 +11,7 @@ pipeline {
             steps {
                 sh '''
                 #Install dependencies (creates the environment)
+                pip install pipenv
                 pipenv install --deploy --dev
                 pytest --junit-xml test-reports/results.xml test/unit/test_calc.py
                 '''
