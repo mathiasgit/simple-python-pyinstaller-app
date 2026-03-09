@@ -9,7 +9,17 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
+                sh 'py.test --junit-xml test-reports/results.xml sources/test/unit/test_calc.py'
+            }
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
+        }
+        stage('ComponentTest') {
+            steps {
+                sh 'behave --junit --junit-directory=test-reports/ features/add2vals.feature'
             }
             post {
                 always {
