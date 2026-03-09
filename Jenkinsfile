@@ -9,7 +9,11 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'pytest --junit-xml test-reports/results.xml test/unit/test_calc.py'
+                sh '''
+                #Install dependencies (creates the environment)
+                pipenv install --deploy --dev
+                pytest --junit-xml test-reports/results.xml test/unit/test_calc.py
+                '''
             }
             post {
                 always {
