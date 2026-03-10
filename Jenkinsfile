@@ -12,7 +12,7 @@ pipeline {
                 sh '''
                 #Install dependencies (creates the environment)
                 python3 -m pip install pipenv
-                python3 -m pipenv install
+                python3 -m pipenv install pytest pytest-cov behave
                 python3 -m pytest --junit-xml test-reports/results.xml test/unit/test_calc.py
                 '''
             }
