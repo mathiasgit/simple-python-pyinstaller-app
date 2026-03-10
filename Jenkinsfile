@@ -11,6 +11,7 @@ pipeline {
             steps {
                 sh '''
                 #Install dependencies (creates the environment)
+                export PATH="$HOME/.local/bin:$PATH
                 python3 -m pip install --user pipenv
                 python3 -m pipenv install --deploy --dev
                 python3 -m pytest --junit-xml test-reports/results.xml test/unit/test_calc.py
@@ -24,7 +25,10 @@ pipeline {
         }
         stage('ComponentTest') {
             steps {
-                sh 'python3 -m behave --junit --junit-directory=test-reports'
+                sh '''
+                export PATH="$HOME/.local/bin:$PATH
+                python3 -m behave --junit --junit-directory=test-reports
+                '''
             }
             post {
                 always {
